@@ -21,3 +21,17 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'signup.html', context)
+
+class Gallery:
+  
+  def __init__(self, name, description):
+      self.name = name
+      self.description = description
+    
+galleries = [
+  Gallery('postmodern', 'new age')
+  ]
+
+
+def galleries_index(request):
+  return render(request, 'galleries/index.html', { 'galleries': galleries })
