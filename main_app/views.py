@@ -22,13 +22,13 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'signup.html', context)
 
-class Gallery:
-  
-  def __init__(self, name, description):
-      self.name = name
-      self.description = description
 
 
 def galleries_index(request):
   galleries = Gallery.objects.all()
   return render(request, 'galleries/index.html', { 'galleries': galleries })
+
+
+def galleries_detail(request, gallery_id):
+  gallery = Gallery.objects.get(id=gallery_id)
+  return render(request, 'galleries/detail.html', { 'gallery': gallery })

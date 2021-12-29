@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link 
+  rel="stylesheet" 
+  type="text/css" 
+  href="{% static 'css/gallery-detail.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+
+<section class="gallery-container">
+  <div class="cat-img">
+    <img 
+      src="{% static 'images/' %}" 
+      alt=""
+    >
+  </div>
+  <div class="gallery-details">
+    <h1>{{ gallery.name }}</h1>
+    <p>{{ gallery.description }}</p>
+    <p>{{ gallery.artwork }}</p>
+    <p>{{ gallery.comments }}</p>
+  </div>
+</section>
+
+{% endblock %}

@@ -9,11 +9,12 @@
 <section class="card-container">
   {% for gallery in galleries %}
     <div class="card">
-      <div class="card-content">
-        
-        <h2 class="card-title">{{ gallery.name }}</h2>
-        <p><small>{{ gallery.description }}</small></p>
-      </div>
+      <a href="{% url 'galleries_detail' cat.id %}">
+        <div class="card-content">
+          <h2 class="card-title">{{ gallery.name }}</h2>
+          <p><small>{{ gallery.description }}</small></p>
+        </div>
+      </a>
     </div>
   {% endfor %}
 </section>
