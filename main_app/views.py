@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from .models import Gallery
 # Create your views here.
 
 class Home(LoginView):
@@ -27,11 +27,8 @@ class Gallery:
   def __init__(self, name, description):
       self.name = name
       self.description = description
-    
-galleries = [
-  Gallery('postmodern', 'new age')
-  ]
 
 
 def galleries_index(request):
+  galleries = Gallery.objects.all()
   return render(request, 'galleries/index.html', { 'galleries': galleries })
