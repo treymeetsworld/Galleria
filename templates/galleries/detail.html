@@ -23,6 +23,10 @@
     <p>{{ gallery.description }}</p>
     <p>{{ gallery.artwork }}</p>
     <p>{{ gallery.comments }}</p>
+    <div class="cat-actions">
+      <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'galleries_delete' gallery.id %}" class="btn danger">Delete</a>
+    </div>
   </div>
 </section>
 

@@ -21,8 +21,8 @@
       <ul>
         <li class="title"><a class="main-title" href="/">GALLERIA</a></li>
         {% if user.is_authenticated %}
-        <li><a href="">Create Gallery</a></li>
-        <li><a href="/galleries">All Galleries</a></li>
+        <li><a href="{% url 'galleries_create' %}">Create Gallery</a></li>
+        <li><a href="{% url 'galleries_index' %}">All Galleries</a></li>
         <li><a href="">My Galleries</a></li>
         <li><a href="">Artwork</a></li>
         {% else %}

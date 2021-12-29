@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Gallery
 # Create your views here.
 
@@ -32,3 +33,15 @@ def galleries_index(request):
 def galleries_detail(request, gallery_id):
   gallery = Gallery.objects.get(id=gallery_id)
   return render(request, 'galleries/detail.html', { 'gallery': gallery })
+
+class GalleryCreate(CreateView):
+  model = Gallery
+  fields = '__all__'
+  
+class GalleryUpdate(UpdateView):
+  model = Gallery
+  fields = ['description', 'artwork', 'comments']
+
+class GalleryDelete(DeleteView):
+  model = Gallery
+  success_url = '/galleries/'
