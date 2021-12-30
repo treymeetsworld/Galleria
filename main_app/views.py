@@ -33,11 +33,12 @@ def galleries_index(request):
 
 def galleries_detail(request, gallery_id):
   gallery = Gallery.objects.get(id=gallery_id)
-  return render(request, 'galleries/detail.html', { 'gallery': gallery })
+  artwork_gallery_doesnt_have = Artwork.objects.exclude(id__in = gallery.artwork.all().values_list('id'))
+  return render(request, 'galleries/detail.html', { 'gallery': gallery, 'artwork': artwork_gallery_doesnt_have })
 
 class GalleryCreate(CreateView):
   model = Gallery
-  fields = '__all__'
+  fields = ['name', 'description', 'comments','user' ]
   
 class GalleryUpdate(UpdateView):
   model = Gallery
@@ -64,3 +65,7 @@ class ArtworkUpdate(UpdateView):
 class ArtworkDelete(DeleteView):
   model = Artwork
   success_url = '/artwork/'
+  
+def assoc_artwork(request, gallery_id, artwork_id):
+  Gallery.objects.get(id=gallery_id).artwork.add(artwork_id)
+  return redirect('galleries_detail', gallery_id=gallery_id)

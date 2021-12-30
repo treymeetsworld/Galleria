@@ -21,7 +21,6 @@
   <div class="gallery-details">
     <h1>{{ gallery.name }}</h1>
     <p>{{ gallery.description }}</p>
-    <p>{{ gallery.artwork }}</p>
     <p>{{ gallery.comments }}</p>
     <div class="cat-actions">
       <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit</a>
@@ -29,5 +28,45 @@
     </div>
   </div>
 </section>
-
+<section>
+  <h3>ARTWORK</h3>
+  <div class="subsection-content">
+    {% if gallery.artwork.count %}
+      {% for artwork in gallery.artwork.all %}
+        <div class="toy-container">
+          <div class="color-block">
+          </div>
+          <a href="{% url 'artwork_detail' artwork.id %}">
+            <p>{{ artwork.title }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class=""> No Artwork</p>
+    {% endif %}
+  </div>
+  <h3>Available Artwork</h3>
+  <div class="subsection-content">
+    {% if artwork.count %}
+    {% for artwork in artwork.all %}
+      <div class="artwork-container">
+        <div 
+          class="color-block"
+        ></div>
+        <a href="{% url 'artwork_detail' artwork.id %}">
+          <p>A  {{ artwork.title }}</p>
+        </a>
+        <form action="{% url 'assoc_artwork' gallery.id artwork.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn submit">Give art</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="">
+      {{gallery.name}} already has all the available art
+    </p>
+  {% endif %}
+  </div>
+</section>
 {% endblock %}

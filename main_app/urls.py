@@ -14,4 +14,6 @@ path('artwork/<int:pk>/', views.ArtworkDetail.as_view(), name='artwork_detail'),
   path('artwork/', views.ArtworkList.as_view(), name='artwork_index'),
   path('artwork/<int:pk>/update/', views.ArtworkUpdate.as_view(), name='artwork_update'),
   path('artwork/<int:pk>/delete/', views.ArtworkDelete.as_view(), name='artwork_delete'),
+  path('galleries/<int:gallery_id>/assoc_artwork/<int:artwork_id>/', views.assoc_artwork, name='assoc_artwork'),
+  
 ]
