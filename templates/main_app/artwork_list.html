@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/artwork-index.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+
+</section>
+
+<section class="card-container">
+  {% for artwork in artwork_list %}
+  <div class="card" >
+    <div class="card-bg"></div>
+    <a href="{% url 'artwork_detail' artwork.id %}">
+      <div class="card-content">
+        <h2>{{ artwork.title }}</h2>
+        <p>A {{ artwork.artist }} </p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

@@ -3,7 +3,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Gallery
+from django.views.generic import ListView, DetailView
+from .models import Gallery, Artwork
 # Create your views here.
 
 class Home(LoginView):
@@ -45,3 +46,21 @@ class GalleryUpdate(UpdateView):
 class GalleryDelete(DeleteView):
   model = Gallery
   success_url = '/galleries/'
+  
+class ArtworkCreate(CreateView):
+  model = Artwork
+  fields = '__all__'
+  
+class ArtworkList(ListView):
+  model = Artwork
+
+class ArtworkDetail(DetailView):
+  model = Artwork
+  
+class ArtworkUpdate(UpdateView):
+  model = Artwork
+  fields = '__all__'
+
+class ArtworkDelete(DeleteView):
+  model = Artwork
+  success_url = '/artwork/'

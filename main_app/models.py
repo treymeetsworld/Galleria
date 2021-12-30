@@ -15,3 +15,16 @@ class Gallery(models.Model):
     
   def get_absolute_url(self):
     return reverse('galleries_detail', kwargs={'gallery_id': self.id})
+  
+class Artwork(models.Model):
+  title = models.CharField(max_length=50)
+  description = models.TextField(max_length=250)
+  artist = models.CharField(max_length=50)
+  country = models.CharField(max_length=50)
+  year =  models.IntegerField()
+  
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('artwork_detail', kwargs={'pk': self.id})

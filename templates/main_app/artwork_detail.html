@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/artwork-detail.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+  
+<div class="card" >
+  <div class="card-bg" ></div>
+  <div class="card-content">
+    <h2>{{ artwork.title }}</h2>
+      <p>A {{ artwork.artist }} </p>
+      <p>A {{ artwork.description }} </p>
+      <p>A {{ artwork.country }} </p>
+      <p>A {{ artwork.year }} </p>
+  </div>
+</div>
+<a href="{% url 'artwork_update' artwork.id %}" class="btn warn">Edit</a>
+<a href="{% url 'artwork_delete' artwork.id %}" class="btn danger">Delete</a>
+
+{% endblock %}

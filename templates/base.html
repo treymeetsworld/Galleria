@@ -21,10 +21,11 @@
       <ul>
         <li class="title"><a class="main-title" href="/">GALLERIA</a></li>
         {% if user.is_authenticated %}
-        <li><a href="{% url 'galleries_create' %}">Create Gallery</a></li>
-        <li><a href="{% url 'galleries_index' %}">All Galleries</a></li>
+        <li><a href="{% url 'galleries_create' %}">New Gallery</a></li>
+        <li><a href="{% url 'galleries_index' %}">Galleries</a></li>
         <li><a href="">My Galleries</a></li>
-        <li><a href="">Artwork</a></li>
+        <li><a href="{% url 'artwork_create' %}">New Artwork</a></li>
+        <li><a href="{% url 'artwork_index' %}">All Artwork</a></li>
         {% else %}
             <li><a href="{% url 'home' %}">Login</a></li>
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
