@@ -4,7 +4,12 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Gallery, Artwork
+from .models import Gallery, Artwork, Photo
+import uuid
+import boto3
+
+S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
+BUCKET = 'galleria-artwork'
 # Create your views here.
 
 class Home(LoginView):
@@ -68,4 +73,21 @@ class ArtworkDelete(DeleteView):
   
 def assoc_artwork(request, gallery_id, artwork_id):
   Gallery.objects.get(id=gallery_id).artwork.add(artwork_id)
+  return redirect('galleries_detail', gallery_id=gallery_id)
+
+def add_photo(request, gallery_id):
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    key = uuid.uuid4().hex + photo_file.name[photo_file.name.rfind('.'):]
+    try:
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      url = f"{S3_BASE_URL}{BUCKET}/{key}"
+      photo = Photo(url=url, gallery_id=gallery_id)
+      gallery_photo = Photo.objects.filter(gallery_id=gallery_id)
+      if gallery_photo.first():
+        gallery_photo.first().delete()
+      photo.save()
+    except Exception as err:
+      print('An error occurred uploading file to S3: %s' % err)
   return redirect('galleries_detail', gallery_id=gallery_id)

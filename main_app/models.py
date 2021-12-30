@@ -30,3 +30,9 @@ class Gallery(models.Model):
   def get_absolute_url(self):
     return reverse('galleries_detail', kwargs={'gallery_id': self.id})
   
+class Photo(models.Model):
+  url = models.CharField(max_length=250)
+  gallery = models.OneToOneField(Gallery, on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f"Photo for gallery_id: {self.gallery_id} @{self.url}"

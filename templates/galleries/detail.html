@@ -13,10 +13,18 @@
 
 <section class="gallery-container">
   <div class="cat-img">
+    {% if gallery.photo.url %}
     <img 
-      src="{% static 'images/' %}" 
-      alt=""
+      src="{{gallery.photo.url}}" 
+      alt="a photo of a gallery"
+      class="usr-img"
     >
+    {% else %}
+      <img 
+        src="{% static '' %}" 
+        alt=""
+      >
+    {% endif %}
   </div>
   <div class="gallery-details">
     <h1>{{ gallery.name }}</h1>
@@ -26,6 +34,22 @@
       <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit</a>
       <a href="{% url 'galleries_delete' gallery.id %}" class="btn danger">Delete</a>
     </div>
+    {% comment %} New markup below {% endcomment %}
+    <h3>Change {{ gallery.name }}'s photo</h3>
+    <p id="file-name"></p>
+    <form 
+      action="{% url 'add_photo' gallery.id %}"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      {% csrf_token %}
+      <label class="btn secondary">
+        Choose photo
+        <input type="file" name="photo-file" id="file-input">
+      </label>
+      <button type="submit" class="btn submit">Upload Photo</button>
+    </form>
+  {% comment %} New markup above {% endcomment %}
   </div>
 </section>
 <section>
