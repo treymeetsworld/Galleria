@@ -29,7 +29,33 @@
   <div class="gallery-details">
     <h1>{{ gallery.name }}</h1>
     <p>{{ gallery.description }}</p>
-    <p>{{ gallery.comments }}</p>
+    {% if gallery.comment_set.all.count %}
+    <table>
+      <thead>
+        <tr><th>Comments</th></tr>
+      </thead>
+      <tbody>
+        {% for comment in gallery.comment_set.all %}
+          <tr>
+            <td>{{comment.comment}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p class="subsection-content">{{gallery.name}} has no comments</p>
+    {% endif %}
+    <h3>Add a Comment</h3>
+    <form
+      action="{% url 'add_comment' gallery.id %}"
+      method="post" 
+      class="subsection-content"
+    >
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <button type="submit" class="btn submit">Post</button>
+    </form>
+    {% comment %} New code above {% endcomment %}
     <div class="cat-actions">
       <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit</a>
       <a href="{% url 'galleries_delete' gallery.id %}" class="btn danger">Delete</a>

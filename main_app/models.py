@@ -21,7 +21,6 @@ class Gallery(models.Model):
   name = models.CharField(max_length=100)
   description = models.TextField(max_length=250)
   artwork = models.ManyToManyField(Artwork)
-  comments = models.TextField(max_length=250)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   
   def __str__(self):
@@ -36,3 +35,10 @@ class Photo(models.Model):
 
   def __str__(self):
     return f"Photo for gallery_id: {self.gallery_id} @{self.url}"
+  
+class Comment(models.Model):
+  comment = models.TextField('', max_length=250)
+  gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+  
+  def __str__(self):
+    return self.comment
