@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/galleries-index.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<section class="card-container">
+  {% for gallery in galleries %}
+    <div class="card">
+      <div class="card-img-container">
+        {% if gallery.photo.url %}
+        <img 
+          src="{{gallery.photo.url}}" 
+          alt="A photo of {{gallery.name}}"
+          class="usr-img"
+        >
+      {% else %}
+        <img 
+          src="{% static 'images/' %}" 
+          alt=""
+        >
+      {% endif %}
+
+      </div>
+      <a href="{% url 'galleries_detail' gallery.id %}">
+        <div class="card-content">
+          <h2 class="card-title">{{ gallery.name }}</h2>
+          <p><small>{{ gallery.description }}</small></p>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

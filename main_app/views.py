@@ -35,6 +35,10 @@ def galleries_index(request):
   galleries = Gallery.objects.all()
   return render(request, 'galleries/index.html', { 'galleries': galleries })
 
+def personal_index(request):
+  galleries = Gallery.objects.filter(user=request.user)
+  return render(request, 'galleries/personal.html', { 'galleries': galleries })
+
 
 def galleries_detail(request, gallery_id):
   gallery = Gallery.objects.get(id=gallery_id)
@@ -44,6 +48,9 @@ def galleries_detail(request, gallery_id):
 class GalleryCreate(CreateView):
   model = Gallery
   fields = ['name', 'description', 'comments','user' ]
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
   
 class GalleryUpdate(UpdateView):
   model = Gallery
