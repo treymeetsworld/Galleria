@@ -6,8 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Gallery, Artwork, Photo, Art
-from .forms import CommentForm, ArtForm
+from .models import Gallery, Artwork, Photo, Search
+from .forms import CommentForm, SearchForm
 import uuid
 import boto3
 import requests
@@ -152,7 +152,15 @@ def add_photo(request, gallery_id):
 
 def search(request):
   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&isHighlight=true&q={}\ '
-  query = 'church'
+  
+  
+  if request.method == 'POST':
+    form = SearchForm(request.POST)
+    form.save()
+  
+  form = SearchForm()
+  
+  query = Search.objects.all()
   
   list_data = []
   
@@ -166,12 +174,12 @@ def search(request):
     
     art_data = {
       'image' : x['primaryImageSmall'],
-      'name' : x['title'],
+      'title' : x['title'],
       'artist' : x['artistDisplayName'],
       'country' : x['culture'],
       'year' : x['objectEndDate'],
     }
     list_data.append(art_data)
   
-  context = {'list_data' : list_data}
+  context = {'list_data' : list_data, 'form' : form}
   return render(request, 'api.html', context)

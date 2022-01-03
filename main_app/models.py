@@ -43,7 +43,7 @@ class Comment(models.Model):
   def __str__(self):
     return self.comment
   
-class Art(models.Model):
+class Search(models.Model):
   title = models.CharField(max_length=50)
   
   def __str__(self):
