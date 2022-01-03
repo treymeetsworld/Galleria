@@ -115,37 +115,63 @@ def add_photo(request, gallery_id):
   return redirect('galleries_detail', gallery_id=gallery_id)
 
 
+# def add_artwork(request):
+#   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&isHighlight=true&q={}\ '
+  
+#   if request.method == 'POST':
+#     form = ArtForm(request.POST)
+#     form.save()
+  
+#   form = ArtForm()
+  
+#   queries = Art.objects.all()
+  
+#   list_data = []
+  
+#   for art in queries:
+#     r = requests.get(url.format(art)).json()
+#     search_id = r['objectIDs'][0]
+    
+  
+#     details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{search_id}'
+#     x = requests.get(details).json()
+    
+#     art_data = {
+#       'image' : x['primaryImageSmall'],
+#       'name' : x['title'],
+#       'artist' : x['artistDisplayName'],
+#       'country' : x['culture'],
+#       'year' : x['objectEndDate'],
+#     }
+    
+#     list_data.append(art_data)
+    
+#   context = {'list_data' : list_data, 'form' : form}
+#   return render(request, 'api.html', context)
+
+
 def search(request):
   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&isHighlight=true&q={}\ '
+  query = 'church'
   
-  if request.method == 'POST':
-    form = ArtForm(request.POST)
-    form.save()
+  list_data = []
   
-  form = ArtForm()
   
-  queries = Art.objects.all()
+  r = requests.get(url.format(query)).json()
+  id_list = r['objectIDs'][:10]
   
-  image_data = []
-  
-  for art in queries:
-    r = requests.get(url.format(art)).json()
-    search_id = r['objectIDs'][0]
+  for id in id_list:
+    details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}'
+    x = requests.get(details).json()
     
-  
-    details_search = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{search_id}'
-    x = requests.get(details_search).json()
-    
-    photo_data = {
+    art_data = {
       'image' : x['primaryImageSmall'],
       'name' : x['title'],
-      'description' : x['objectName'],
       'artist' : x['artistDisplayName'],
       'country' : x['culture'],
       'year' : x['objectEndDate'],
     }
-    
-    image_data.append(photo_data)
-    
-  context = {'image_data' : image_data, 'form' : form}
+    list_data.append(art_data)
+  
+  context = {'list_data' : list_data}
   return render(request, 'api.html', context)

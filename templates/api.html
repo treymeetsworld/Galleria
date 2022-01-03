@@ -17,13 +17,12 @@
   </form> 
   <h1>results</h1>
   <div>
-    {% for photo_data in image_data %}
-    <img src="{{photo_data.image}}" alt="">
-    <h3>{{photo_data.name}}</h3>
-    {% comment %} <p>{{photo_data.description}}</p> {% endcomment %}
-    <p>{{photo_data.artist}}</p>
-    <p>{{photo_data.country}}</p>
-    <p>{{photo_data.year}}</p>
+    {% for art_data in list_data %}
+    <img src="{{art_data.image}}" alt="">
+    <h3>{{art_data.name}}</h3>
+    <p>{{art_data.artist}}</p>
+    <p>{{art_data.country}}</p>
+    <p>{{art_data.year}}</p>
     {% endfor %}
   </div>
 </section>

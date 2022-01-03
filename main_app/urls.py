@@ -18,6 +18,7 @@ path('artwork/<int:pk>/', views.ArtworkDetail.as_view(), name='artwork_detail'),
   path('artwork/<int:pk>/delete/', views.ArtworkDelete.as_view(), name='artwork_delete'),
   path('galleries/<int:gallery_id>/assoc_artwork/<int:artwork_id>/', views.assoc_artwork, name='assoc_artwork'),
   path('galleries/<int:gallery_id>/add_photo/', views.add_photo, name='add_photo'),
+  # path('api/', views.add_artwork, name='add_artwork'),
   path('api/', views.search, name='search')
   
 ]
