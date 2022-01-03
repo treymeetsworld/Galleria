@@ -130,15 +130,19 @@ def search(request):
   
   for art in queries:
     r = requests.get(url.format(art)).json()
-    search_data = r['objectIDs'][0]
+    search_id = r['objectIDs'][0]
     
   
-    details_search = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{search_data}'
+    details_search = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{search_id}'
     x = requests.get(details_search).json()
     
     photo_data = {
       'image' : x['primaryImageSmall'],
-      'name' : x['title']
+      'name' : x['title'],
+      'description' : x['objectName'],
+      'artist' : x['artistDisplayName'],
+      'country' : x['culture'],
+      'year' : x['objectEndDate'],
     }
     
     image_data.append(photo_data)

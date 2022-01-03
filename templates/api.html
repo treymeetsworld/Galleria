@@ -16,10 +16,16 @@
     <button type="submit" class="btn submit">Search</button>
   </form> 
   <h1>results</h1>
-  {% for photo_data in image_data %}
-  <h3>{{photo_data.name}}</h3>
-  <img src="{{photo_data.image}}" alt="">
-  {% endfor %}
+  <div>
+    {% for photo_data in image_data %}
+    <img src="{{photo_data.image}}" alt="">
+    <h3>{{photo_data.name}}</h3>
+    {% comment %} <p>{{photo_data.description}}</p> {% endcomment %}
+    <p>{{photo_data.artist}}</p>
+    <p>{{photo_data.country}}</p>
+    <p>{{photo_data.year}}</p>
+    {% endfor %}
+  </div>
 </section>
 
 
