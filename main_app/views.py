@@ -6,10 +6,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Gallery, Artwork, Photo
-from .forms import CommentForm
+from .models import Gallery, Artwork, Photo, Art
+from .forms import CommentForm, ArtForm
 import uuid
 import boto3
+import requests
 
 S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
 BUCKET = 'galleria-artwork'
@@ -112,3 +113,35 @@ def add_photo(request, gallery_id):
     except Exception as err:
       print('An error occurred uploading file to S3: %s' % err)
   return redirect('galleries_detail', gallery_id=gallery_id)
+
+
+def search(request):
+  url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&isHighlight=true&q={}\ '
+  
+  if request.method == 'POST':
+    form = ArtForm(request.POST)
+    form.save()
+  
+  form = ArtForm()
+  
+  queries = Art.objects.all()
+  
+  image_data = []
+  
+  for art in queries:
+    r = requests.get(url.format(art)).json()
+    search_data = r['objectIDs'][0]
+    
+  
+    details_search = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{search_data}'
+    x = requests.get(details_search).json()
+    
+    photo_data = {
+      'image' : x['primaryImageSmall'],
+      'name' : x['title']
+    }
+    
+    image_data.append(photo_data)
+    
+  context = {'image_data' : image_data, 'form' : form}
+  return render(request, 'api.html', context)

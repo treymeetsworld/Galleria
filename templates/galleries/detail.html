@@ -55,12 +55,10 @@
       {{ comment_form.as_p }}
       <button type="submit" class="btn submit">Post</button>
     </form>
-    {% comment %} New code above {% endcomment %}
     <div class="cat-actions">
       <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit</a>
       <a href="{% url 'galleries_delete' gallery.id %}" class="btn danger">Delete</a>
     </div>
-    {% comment %} New markup below {% endcomment %}
     <h3>Change {{ gallery.name }}'s photo</h3>
     <p id="file-name"></p>
     <form 
@@ -75,7 +73,6 @@
       </label>
       <button type="submit" class="btn submit">Upload Photo</button>
     </form>
-  {% comment %} New markup above {% endcomment %}
   </div>
 </section>
 <section>
