@@ -43,8 +43,15 @@ class Comment(models.Model):
   def __str__(self):
     return self.comment
   
-class Search(models.Model):
-  q = models.CharField(max_length=50)
+class Art(models.Model):
+  title = models.CharField(max_length=50, blank=True)
+  image = models.TextField(max_length=50, blank=True)
+  artist = models.CharField(max_length=50, blank=True)
+  country = models.CharField(max_length=50, blank=True)
+  year =  models.IntegerField()
   
   def __str__(self):
-    return self.q
+    return self.title
+  
+  # def get_absolute_url(self):
+  #   return reverse('', kwargs={'pk': self.id})

@@ -7,8 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Gallery, Artwork, Photo, Search
-from .forms import CommentForm, SearchForm
+from .models import Gallery, Artwork, Photo, Art
+from .forms import CommentForm
 import uuid
 import boto3
 import requests
@@ -116,76 +116,6 @@ def add_photo(request, gallery_id):
   return redirect('galleries_detail', gallery_id=gallery_id)
 
 
-# def add_artwork(request):
-#   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&isHighlight=true&q={}\ '
-  
-#   if request.method == 'POST':
-#     form = ArtForm(request.POST)
-#     form.save()
-  
-#   form = ArtForm()
-  
-#   queries = Art.objects.all()
-  
-#   list_data = []
-  
-#   for art in queries:
-#     r = requests.get(url.format(art)).json()
-#     search_id = r['objectIDs'][0]
-    
-  
-#     details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{search_id}'
-#     x = requests.get(details).json()
-    
-#     art_data = {
-#       'image' : x['primaryImageSmall'],
-#       'name' : x['title'],
-#       'artist' : x['artistDisplayName'],
-#       'country' : x['culture'],
-#       'year' : x['objectEndDate'],
-#     }
-    
-#     list_data.append(art_data)
-    
-#   context = {'list_data' : list_data, 'form' : form}
-#   return render(request, 'api.html', context)
-
-
-# def search(request):
-#   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true\ '
-  
-  
-#   # if request.method == 'GET':
-#   #   form = SearchForm(request.GET)
-    
-  
-#   # form = SearchForm()
-  
-#   query = 'q'
-  
-#   list_data = []
-  
-  
-#   r = requests.get(url.format(query)).json()
-#   id_list = r['objectIDs'][:10]
-  
-#   for id in id_list:
-#     details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}'
-#     x = requests.get(details).json()
-    
-#     art_data = {
-#       'image' : x['primaryImageSmall'],
-#       'title' : x['title'],
-#       'artist' : x['artistDisplayName'],
-#       'country' : x['culture'],
-#       'year' : x['objectEndDate'],
-#     }
-#     list_data.append(art_data)
-  
-#   context = {'list_data' : list_data}
-  # return render(request, 'api.html', context)
-
-
 def search(request):
 
   return render(request, 'api.html', )
@@ -194,26 +124,41 @@ def search(request):
 def searchRequest(request):
   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q={}'
   
-  q = request.GET['q']
-  
-  list_data = []
-  
-  r = requests.get(url.format(q)).json()
-  id_list = r['objectIDs'][:10]
-  
-  for id in id_list:
-    details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}'
-    x = requests.get(details).json()
+  if 'q' in request.GET:
+    q = request.GET['q']
     
-    art_data = {
-      'image' : x['primaryImageSmall'],
-      'title' : x['title'],
-      'artist' : x['artistDisplayName'],
-      'country' : x['culture'],
-      'year' : x['objectEndDate'],
-    }
-    list_data.append(art_data)
+    list_data = []
+    
+    r = requests.get(url.format(q)).json()
+    id_list = r['objectIDs'][:10]
+    
+    for id in id_list:
+      details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}'
+      x = requests.get(details).json()
+      
+      art_data = {
+        'image' : x['primaryImageSmall'],
+        'title' : x['title'],
+        'artist' : x['artistDisplayName'],
+        'country' : x['culture'],
+        'year' : x['objectEndDate'],
+      }
+      list_data.append(art_data)
     
   context = { 'list_data': list_data}
   return render(request, 'api.html', context)
 
+
+
+def art_index(request):
+  
+  if request.method == 'POST':
+    title = request.POST.get("title")
+    image = request.POST.get("image")
+    artist = request.POST.get("artist")
+    country = request.POST.get("country")
+    year = request.POST.get("year")
+    art = Art(title=title, image=image, artist=artist, country=country, year=year)
+    art.save()
+    
+  return redirect( '', )

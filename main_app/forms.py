@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput
-from .models import Comment, Search
+from .models import Comment, Art
 
 class CommentForm(ModelForm):
   class Meta:
@@ -7,8 +7,8 @@ class CommentForm(ModelForm):
     fields = ['comment']
     
 
-class SearchForm(ModelForm):
+class ArtForm(ModelForm):
   class Meta:
-    model = Search
-    fields = ['q']
-    widgets = { 'q' : TextInput(attrs={'placeholder' : 'Search', 'class' : 'input'})}
+    model = Art
+    fields = '__all__'
+    widgets = { '' : TextInput(attrs={'placeholder' : 'Search', 'class' : 'input'})}
