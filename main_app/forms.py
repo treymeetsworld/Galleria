@@ -10,5 +10,5 @@ class CommentForm(ModelForm):
 class SearchForm(ModelForm):
   class Meta:
     model = Search
-    fields = ['title']
-    widgets = { 'title' : TextInput(attrs={'placeholder' : 'Search', 'class' : 'input'})}
+    fields = ['q']
+    widgets = { 'q' : TextInput(attrs={'placeholder' : 'Search', 'class' : 'input'})}

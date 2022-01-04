@@ -9,15 +9,16 @@
 
 
 <section>
-  <form method="post" class="login">
+   <form method="get" class="login"  action="{% url 'search-request' %}"> 
     <h1>Search</h1>
     {% csrf_token %}
-    {{form.title}}
-    <button type="submit" class="btn submit" action="{% url 'search'%}">Search</button>
-  </form> 
+    <input type="text" name='q'>
+    <button type="submit" class="btn submit">Search</button>
+  </form>
   <h1>results</h1>
   <div>
-    {% for art_data in list_data %}
+    {% if list_data %}
+    {% for art_data in list_data %} 
     <img src="{{art_data.image}}" alt="">
     <h3>{{art_data.title}}</h3>
     <p>{{art_data.artist}}</p>
@@ -29,7 +30,10 @@
       <button type="submit" class="btn submit">Add to Gallery</button>
     </form>
     {% endfor %}
-  </div>
+    {% else %}
+    <h3>No results</h3>
+    {% endif %}
+  </div> 
 </section>
 
 

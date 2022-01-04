@@ -1,3 +1,4 @@
+from django.forms.forms import Form
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
@@ -150,22 +151,54 @@ def add_photo(request, gallery_id):
 #   return render(request, 'api.html', context)
 
 
+# def search(request):
+#   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true\ '
+  
+  
+#   # if request.method == 'GET':
+#   #   form = SearchForm(request.GET)
+    
+  
+#   # form = SearchForm()
+  
+#   query = 'q'
+  
+#   list_data = []
+  
+  
+#   r = requests.get(url.format(query)).json()
+#   id_list = r['objectIDs'][:10]
+  
+#   for id in id_list:
+#     details = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{id}'
+#     x = requests.get(details).json()
+    
+#     art_data = {
+#       'image' : x['primaryImageSmall'],
+#       'title' : x['title'],
+#       'artist' : x['artistDisplayName'],
+#       'country' : x['culture'],
+#       'year' : x['objectEndDate'],
+#     }
+#     list_data.append(art_data)
+  
+#   context = {'list_data' : list_data}
+  # return render(request, 'api.html', context)
+
+
 def search(request):
-  url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&isHighlight=true&q={}\ '
+
+  return render(request, 'api.html', )
+
+
+def searchRequest(request):
+  url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q={}'
   
-  
-  if request.method == 'POST':
-    form = SearchForm(request.POST)
-    form.save()
-  
-  form = SearchForm()
-  
-  query = Search.objects.all()
+  q = request.GET['q']
   
   list_data = []
   
-  
-  r = requests.get(url.format(query)).json()
+  r = requests.get(url.format(q)).json()
   id_list = r['objectIDs'][:10]
   
   for id in id_list:
@@ -180,6 +213,7 @@ def search(request):
       'year' : x['objectEndDate'],
     }
     list_data.append(art_data)
-  
-  context = {'list_data' : list_data, 'form' : form}
+    
+  context = { 'list_data': list_data}
   return render(request, 'api.html', context)
+

@@ -44,7 +44,7 @@ class Comment(models.Model):
     return self.comment
   
 class Search(models.Model):
-  title = models.CharField(max_length=50)
+  q = models.CharField(max_length=50)
   
   def __str__(self):
-    return self.title
+    return self.q
