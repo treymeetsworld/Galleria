@@ -44,7 +44,7 @@ class Comment(models.Model):
     return self.comment
   
 class Art(models.Model):
-  title = models.CharField(max_length=50, blank=True)
+  title = models.CharField(max_length=100, blank=True)
   image = models.TextField(max_length=50, blank=True)
   artist = models.CharField(max_length=50, blank=True)
   country = models.CharField(max_length=50, blank=True)
@@ -53,5 +53,5 @@ class Art(models.Model):
   def __str__(self):
     return self.title
   
-  # def get_absolute_url(self):
-  #   return reverse('', kwargs={'pk': self.id})
+  def get_absolute_url(self):
+    return reverse('art_detail', kwargs={'pk': self.id})

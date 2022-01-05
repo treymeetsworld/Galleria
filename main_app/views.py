@@ -154,11 +154,28 @@ def art_index(request):
   
   if request.method == 'POST':
     title = request.POST.get("title")
+    if not title:
+      title = 'unknown'
     image = request.POST.get("image")
+    if not image:
+      image = 'unknown'
     artist = request.POST.get("artist")
+    if not artist:
+      artist = 'unknown'
     country = request.POST.get("country")
+    if not country:
+      country = 'unknown'
     year = request.POST.get("year")
+    if not year:
+      year = '0'
     art = Art(title=title, image=image, artist=artist, country=country, year=year)
+    artwork = Art.objects.all()
     art.save()
     
-  return redirect( '', )
+  context = { 'artwork': artwork }
+  return render(request, 'art-index.html', context )
+
+def art_detail(request,pk):
+  artwork = Art.objects.filter(id=pk)
+  context = { 'artwork': artwork}
+  return render(request, 'art_detail.html', context )

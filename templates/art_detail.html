@@ -14,13 +14,11 @@
     {% if artwork %}
     {% for art in artwork %} 
     <div>
-      <a href="{% url 'art_detail' art.id %}">
         <img src="{{art.image}}" alt="">
         <h3>{{art.title}}</h3>
         <p>{{art.artist}}</p>
         <p>{{art.country}}</p>
         <p>{{art.year}}</p>
-      </a>
     </div>
       {% endfor %}
       {% else %}

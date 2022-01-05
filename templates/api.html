@@ -19,12 +19,17 @@
   <div>
     {% if list_data %}
     {% for art_data in list_data %} 
-    <img src="{{art_data.image}}" alt="">
-    <h3>{{art_data.title}}</h3>
-    <p>{{art_data.artist}}</p>
-    <p>{{art_data.country}}</p>
-    <p>{{art_data.year}}</p>
     <form method="post" action="{% url 'art-index'%}">
+    <img src="{{art_data.image}}" alt="">
+    <input name="image" type="hidden" value="{{ art_data.image }}">
+    <h3 >{{art_data.title}}</h3>
+    <input name="title" type="hidden" value="{{ art_data.title }}">
+    <p>{{art_data.artist}}</p>
+    <input name="artist" type="hidden" value="{{ art_data.artist }}">
+    <p>{{art_data.country}}</p>
+    <input name="country" type="hidden" value="{{ art_data.country }}">
+    <p name="year">{{art_data.year}}</p>
+    <input name="year" type="hidden" value="{{ art_data.year}}">
       {% csrf_token %}
       <button type="submit" class="btn submit">Add to Gallery</button>
     </form>
