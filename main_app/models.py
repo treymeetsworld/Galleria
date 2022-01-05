@@ -17,11 +17,26 @@ class Artwork(models.Model):
     return reverse('artwork_detail', kwargs={'pk': self.id})
   
   
+class Art(models.Model):
+  title = models.CharField(max_length=100, blank=True)
+  image = models.TextField(max_length=50, blank=True)
+  artist = models.CharField(max_length=50, blank=True)
+  country = models.CharField(max_length=50, blank=True)
+  year =  models.IntegerField()
+
+
+  def __str__(self):
+    return self.title
+
+  def get_absolute_url(self):
+    return reverse('art_detail', kwargs={'pk': self.id})
+  
 class Gallery(models.Model):
   name = models.CharField(max_length=100)
   description = models.TextField(max_length=250)
   artwork = models.ManyToManyField(Artwork)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
+  art = models.ManyToManyField(Art)
   
   def __str__(self):
     return self.name
@@ -43,15 +58,3 @@ class Comment(models.Model):
   def __str__(self):
     return self.comment
   
-class Art(models.Model):
-  title = models.CharField(max_length=100, blank=True)
-  image = models.TextField(max_length=50, blank=True)
-  artist = models.CharField(max_length=50, blank=True)
-  country = models.CharField(max_length=50, blank=True)
-  year =  models.IntegerField()
-  
-  def __str__(self):
-    return self.title
-  
-  def get_absolute_url(self):
-    return reverse('art_detail', kwargs={'pk': self.id})

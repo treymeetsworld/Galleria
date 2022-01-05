@@ -24,10 +24,10 @@
         <li><a href="{% url 'galleries_create' %}">New Gallery</a></li>
         <li><a href="{% url 'galleries_index' %}">Galleries</a></li>
         <li><a href="{% url 'personal_index' %}">My Galleries</a></li>
-        <li><a href="{% url 'artwork_create' %}">New Artwork</a></li>
-        <li><a href="{% url 'artwork_index' %}">All Artwork</a></li>
-        {% comment %} <li><a href="{% url 'add_artwork' %}">Search</a></li> {% endcomment %}
-        <li><a href="{% url 'search' %}">Search</a></li>
+        <li><a href="{% url 'artwork_create' %}">Add Artwork</a></li>
+        <li><a href="{% url 'artwork_index' %}">My Artwork</a></li>
+        <li><a href="{% url 'art-index' %}">MET Artwork</a></li>
+        <li><a href="{% url 'search' %}">Search the MET</a></li>
         <li><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
             <li><a href="{% url 'home' %}">Login</a></li>

@@ -49,11 +49,12 @@ def galleries_detail(request, gallery_id):
   gallery = Gallery.objects.get(id=gallery_id)
   comment_form = CommentForm()
   artwork_gallery_doesnt_have = Artwork.objects.exclude(id__in = gallery.artwork.all().values_list('id'))
-  return render(request, 'galleries/detail.html', { 'gallery': gallery,'comment_form': comment_form,  'artwork': artwork_gallery_doesnt_have })
+  art_gallery_doesnt_have = Art.objects.exclude(id__in = gallery.art.all().values_list('id'))
+  return render(request, 'galleries/detail.html', { 'gallery': gallery,'comment_form': comment_form,  'artwork': artwork_gallery_doesnt_have , 'art': art_gallery_doesnt_have })
 
 class GalleryCreate(LoginRequiredMixin,CreateView):
   model = Gallery
-  fields = ['name', 'description', ]
+  fields = ['name', 'description']
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
@@ -98,6 +99,11 @@ def assoc_artwork(request, gallery_id, artwork_id):
   return redirect('galleries_detail', gallery_id=gallery_id)
 
 @login_required(login_url='/')
+def assoc_art(request, gallery_id, art_id):
+  Gallery.objects.get(id=gallery_id).art.add(art_id)
+  return redirect('galleries_detail', gallery_id=gallery_id)
+
+@login_required(login_url='/')
 def add_photo(request, gallery_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
@@ -118,9 +124,9 @@ def add_photo(request, gallery_id):
 
 def search(request):
 
-  return render(request, 'api.html', )
+  return render(request, 'api.html' )
 
-
+@login_required(login_url='/')
 def searchRequest(request):
   url = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q={}'
   
@@ -149,7 +155,7 @@ def searchRequest(request):
   return render(request, 'api.html', context)
 
 
-
+@login_required(login_url='/')
 def art_index(request):
   
   if request.method == 'POST':
@@ -171,10 +177,14 @@ def art_index(request):
     art = Art(title=title, image=image, artist=artist, country=country, year=year)
     artwork = Art.objects.all()
     art.save()
-    
-  context = { 'artwork': artwork }
-  return render(request, 'art-index.html', context )
+    context = { 'artwork': artwork }
+    return render(request, 'art-index.html', context )
+  else:
+    artwork = Art.objects.all()
+    context = { 'artwork': artwork }
+  return render(request, 'art-index.html', context)
 
+@login_required(login_url='/')
 def art_detail(request,pk):
   artwork = Art.objects.filter(id=pk)
   context = { 'artwork': artwork}

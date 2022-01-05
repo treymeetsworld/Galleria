@@ -56,8 +56,8 @@
       <button type="submit" class="btn submit">Post</button>
     </form>
     <div class="cat-actions">
-      <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit</a>
-      <a href="{% url 'galleries_delete' gallery.id %}" class="btn danger">Delete</a>
+      <a href="{% url 'galleries_update' gallery.id %}" class="btn warn">Edit Gallery</a>
+      <a href="{% url 'galleries_delete' gallery.id %}" class="btn danger">Delete Gallery</a>
     </div>
     <h3>Change {{ gallery.name }}'s photo</h3>
     <p id="file-name"></p>
@@ -68,7 +68,7 @@
     >
       {% csrf_token %}
       <label class="btn secondary">
-        Choose photo
+        Choose photo <br>
         <input type="file" name="photo-file" id="file-input">
       </label>
       <button type="submit" class="btn submit">Upload Photo</button>
@@ -92,7 +92,7 @@
       <p class=""> No Artwork</p>
     {% endif %}
   </div>
-  <h3>Available Artwork</h3>
+  <h3> Personal Artwork Available</h3>
   <div class="subsection-content">
     {% if artwork.count %}
     {% for artwork in artwork.all %}
@@ -105,7 +105,48 @@
         </a>
         <form action="{% url 'assoc_artwork' gallery.id artwork.id %}" method="post">
           {% csrf_token %}
-          <button type="submit" class="btn submit">Give art</button>
+          <button type="submit" class="btn submit">Add to Gallery</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="">
+      {{gallery.name}} already has all the available art
+    </p>
+  {% endif %}
+  </div>
+</section>
+<section>
+  <h3>MET ARTWORK</h3>
+  <div class="subsection-content">
+    {% if gallery.art.count %}
+      {% for art in gallery.art.all %}
+        <div class="toy-container">
+          <div class="color-block">
+          </div>
+          <a href="{% url 'art_detail' art.id %}">
+            <p>{{ art.title }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class=""> No Artwork</p>
+    {% endif %}
+  </div>
+  <h3>Available Artwork</h3>
+  <div class="subsection-content">
+    {% if art.count %}
+    {% for art in art.all %}
+      <div class="artwork-container">
+        <div 
+          class="color-block"
+        ></div>
+        <a href="{% url 'art_detail' art.id %}">
+          <p>A  {{ art.title }}</p>
+        </a>
+        <form action="{% url 'assoc_art' gallery.id art.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn submit">Add to Gallery</button>
         </form>
       </div>
     {% endfor %}
