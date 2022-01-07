@@ -21,8 +21,13 @@
     <div class="card-bg"></div>
     <a href="{% url 'artwork_detail' artwork.id %}">
       <div class="card-content">
+        <img 
+          src="{{artwork.artworkphoto.url}}"
+          alt="a photo of artwork"
+          class="usr-img"
+        >
         <h2>{{ artwork.title }}</h2>
-        <p>A {{ artwork.artist }} </p>
+        <p> {{ artwork.artist }} </p>
       </div>
     </a>
   </div>

@@ -1,0 +1,65 @@
+.search{
+  height: 300px;
+  width: 600px;
+  margin: 50px;
+  border: 5px solid darkslategray;
+}
+.api-section{
+  flex: auto;
+  width: 100%;
+  margin-left: 20px;
+}
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+.login h1 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  margin: 10px 0 16px 0;
+}
+
+.login > p {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.login label {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.login input {
+  font-size: 1.2rem;
+  padding: 2px;
+}
+
+.login .btn {
+  align-self: flex-end;
+  margin-right: 0;
+  margin-top: 10px;
+}
+
+.results-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.form-box {
+  margin: 8px;
+}
+img.usr-img {
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+}
+.h-container  {
+  margin: 30px 0;
+}
+.h-container h1 {
+  text-align: center;
+}

@@ -2,18 +2,18 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/art-index.css' %}"/>
 {% endblock %}
 
 {% block content %}
 
 
-<section>
-  <h1>results</h1>
-  <div>
+<section class='met-section'>
+  <h1>COLLECTION</h1>
+  <div class='met-container'>
     {% if artwork %}
     {% for art in artwork %} 
-    <div>
+    <div class='met-img'>
       <a href="{% url 'art_detail' art.id %}">
         <img src="{{art.image}}" alt="">
         <h3>{{art.title}}</h3>

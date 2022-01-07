@@ -13,6 +13,7 @@ main {
   justify-content: center;
   flex-wrap: wrap;
   height: 100%;
+  flex-grow: 1;
 }
 
 main > section {
@@ -101,4 +102,24 @@ main > section {
     padding: 0 5px;
     min-height: calc(100vh - 57.6px);
   }
+}
+
+.landing{
+  width: 100%;
+}
+.landing h1 {
+  font-size: 13em;
+  margin: 0;
+}
+.large-img{
+  width: 95%;
+}
+.large-text{
+  flex: auto;
+  height: 10%;
+}
+.usr-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }

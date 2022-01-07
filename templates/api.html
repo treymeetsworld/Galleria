@@ -2,43 +2,48 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/> {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/api.css' %}"/>
 {% endblock %}
 
 {% block content %}
 
 
-<section>
-  <form method="get" class="login"  action="{% url 'search-request' %}"> 
-    <h1>Search</h1>
-    {% csrf_token %}
-    <input type="text" name='q'>
-    <button type="submit" class="btn submit">Search</button>
-  </form>
-  <h1>results</h1>
-  <div>
-    {% if list_data %}
-    {% for art_data in list_data %} 
-    <form method="post" action="{% url 'art-index'%}">
-    <img src="{{art_data.image}}" alt="">
-    <input name="image" type="hidden" value="{{ art_data.image }}">
-    <h3 >{{art_data.title}}</h3>
-    <input name="title" type="hidden" value="{{ art_data.title }}">
-    <p>{{art_data.artist}}</p>
-    <input name="artist" type="hidden" value="{{ art_data.artist }}">
-    <p>{{art_data.country}}</p>
-    <input name="country" type="hidden" value="{{ art_data.country }}">
-    <p name="year">{{art_data.year}}</p>
-    <input name="year" type="hidden" value="{{ art_data.year}}">
-      {% csrf_token %}
-      <button type="submit" class="btn submit">Add to Gallery</button>
-    </form>
-    {% endfor %}
-    {% else %}
-    <h3>No results</h3>
-    {% endif %}
-  </div> 
-</section>
+  <section class='api-section'>
+    <div class="search">
+      <form method="get" class="login"  action="{% url 'search-request' %}"> 
+        <h1>Search</h1>
+        {% csrf_token %}
+        <input type="text" name='q'>
+        <button type="submit" class="btn submit">Search</button>
+      </form>
+    </div>
+    <div class="h-container"><h1>ARTWORK</h1></div>
+    <div class='results-container'>
+      {% if list_data %}
+      {% for art_data in list_data %} 
+      <div class="form-box">
+      <form method="post" action="{% url 'art-index'%}">
+      <img src="{{art_data.image}}" alt="" class='usr-img'>
+      <input name="image" type="hidden" value="{{ art_data.image }}">
+      <h3 >{{art_data.title}}</h3>
+      <input name="title" type="hidden" value="{{ art_data.title }}">
+      <p>{{art_data.artist}}</p>
+      <input name="artist" type="hidden" value="{{ art_data.artist }}">
+      <p>{{art_data.country}}</p>
+      <input name="country" type="hidden" value="{{ art_data.country }}">
+      <p name="year">{{art_data.year}}</p>
+      <input name="year" type="hidden" value="{{ art_data.year}}">
+        {% csrf_token %}
+        <button type="submit" class="btn submit">Add to Collection</button>
+      </form>
+    </div>
+      {% endfor %}
+      {% else %}
+      <h3>No results</h3>
+      {% endif %}
+    </div> 
+  </section>
 
 
 
