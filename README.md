@@ -7,7 +7,7 @@ Visit the site [here](https://xplor-usa.herokuapp.com/).
 ## Motivation: 
 Im very passionate about art and wanted to create something that allows people to view different kinds of art curated based on a gallery type.
 ***
-## Site:
+## Site: [GALLERIA](https://cryptic-springs-88436.herokuapp.com)!
 ***
 Here are my planning materials [trello](https://trello.com/b/EELPUGRN/galleria)! 
 
