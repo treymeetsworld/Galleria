@@ -362,7 +362,7 @@ li{
   list-style: none;
 }
 body{
-  background-color: aquamarine;
+  background-color: #2b413c;
 }
 
 nav {
@@ -406,4 +406,16 @@ nav li {
 }
 .main-title{
   font-size: xx-large;
+  color: #ee411a;
+}
+.main-title:hover{
+  text-decoration: underline;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+a:hover{
+  text-decoration: #ee411a underline;
 }
