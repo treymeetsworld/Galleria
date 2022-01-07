@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .models import Gallery, Artwork, Photo, Art
+from .models import Gallery, Artwork, Photo, Art, ArtworkPhoto
 from .forms import CommentForm
 import uuid
 import boto3
@@ -120,6 +120,25 @@ def add_photo(request, gallery_id):
     except Exception as err:
       print('An error occurred uploading file to S3: %s' % err)
   return redirect('galleries_detail', gallery_id=gallery_id)
+
+
+@login_required(login_url='/')
+def add_artwork(request, pk):
+  artwork_file = request.FILES.get('artwork-file', None)
+  if artwork_file:
+    s3 = boto3.client('s3')
+    key = uuid.uuid4().hex + artwork_file.name[artwork_file.name.rfind('.'):]
+    try:
+      s3.upload_fileobj(artwork_file, BUCKET, key)
+      url = f"{S3_BASE_URL}{BUCKET}/{key}"
+      artwork = ArtworkPhoto(url=url, artwork_id=pk)
+      artwork_photo = ArtworkPhoto.objects.filter(pk=pk)
+      if artwork_photo.first():
+        artwork_photo.first().delete()
+      artwork.save()
+    except Exception as err:
+      print('An error occurred uploading file to S3: %s' % err)
+  return redirect('artwork_detail', pk=pk)
 
 
 def search(request):

@@ -12,13 +12,39 @@
 {% block content %}
   
 <div class="card" >
+  <h3>Add {{ artwork.title }}'s Artwork</h3>
+    <p id="file-name1"></p>
+    <form 
+      action="{% url 'add_artwork' artwork.id %}"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      {% csrf_token %}
+      <label class="btn secondary">
+        Choose artwork <br>
+        <input type="file" name="artwork-file" id="file-input1">
+      </label>
+      <button type="submit" class="btn submit">Upload </button>
+    </form>
   <div class="card-bg" ></div>
   <div class="card-content">
+    {% if artwork.artworkphoto.url %}
+    <img 
+      src="{{artwork.artworkphoto.url}}"
+      alt="a photo of artwork"
+      class="usr-img"
+    >
+    {% else %}
+      <img 
+        src="{% static '' %}" 
+        alt=""
+      >
+    {% endif %}
     <h2>{{ artwork.title }}</h2>
-      <p>A {{ artwork.artist }} </p>
-      <p>A {{ artwork.description }} </p>
-      <p>A {{ artwork.country }} </p>
-      <p>A {{ artwork.year }} </p>
+      <p> {{ artwork.artist }} </p>
+      <p>{{ artwork.description }} </p>
+      <p>{{ artwork.country }} </p>
+      <p>{{ artwork.year }} </p>
   </div>
 </div>
 <a href="{% url 'artwork_update' artwork.id %}" class="btn warn">Edit</a>

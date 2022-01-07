@@ -98,8 +98,8 @@
     {% for artwork in artwork.all %}
       <div class="artwork-container">
         <div 
-          class="color-block"
-        ></div>
+          class="color-block">
+        </div>
         <a href="{% url 'artwork_detail' artwork.id %}">
           <p>A  {{ artwork.title }}</p>
         </a>
@@ -156,5 +156,8 @@
     </p>
   {% endif %}
   </div>
+</section>
+<section>
+
 </section>
 {% endblock %}
